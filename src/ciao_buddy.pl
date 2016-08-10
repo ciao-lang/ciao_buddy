@@ -96,3 +96,75 @@
 :- include(.(ciao_buddy_config_auto)).
 
 :- use_foreign_library(bdd).
+
+% build_bdd(E,B) builds a BDD B from the expression E.
+% Syntax for expressions
+% E ::= 0 | 1 | Var | -E | E1+E2 | E1*E2 | E1->E2 | E1=E2
+% Var is a Prolog atom or else a term '$VAR'(N) where N is atom or number.
+% E.g. bdd_build(x+(y*z),B).
+% E.g. bdd_build('$VAR'(0)+('$VAR'(a)*'$VAR'(b)),B).
+
+
+bdd_build(E,B) :-
+	bdd_build1(E,B,_).
+	
+% bdd_build1(E,B,Dict) - called by bdd_build/2.
+% Like bdd_build but the 3rd argument is a dictionary of
+% variables of the form [(v1,0),(v2,1),....|_] where the tail is a variable.
+% E.g. bdd_build1(x+(y*z),B1,Dict),bdd_build1(w->(x+y),B2,Dict).
+% Assuming Dict is free before the first call.
+% After the first call Dict=[(x,0),(y,1),(z,2)|Dict1]
+% After the second call Dict=[(x,0),(y,1),(z,2),(w,3)|Dict2] and Dict1=[(w,3)|Dict2].
+
+bdd_build1(0,B,_) :-
+	bdd_false(B),
+	bdd_addref(B,B).
+bdd_build1(1,B,_) :-
+	bdd_true(B),
+	bdd_addref(B,B).
+bdd_build1(X,B,Dict) :-
+	boolvar(X),
+	!,
+	lookup(X,Dict,N),
+	bdd_ithvar(N,B).
+bdd_build1(-(X),B,Dict) :-
+	bdd_build1(X,B1,Dict),
+	bdd_not(B1,B),
+	bdd_addref(B,B).
+bdd_build1(X*Y,B,Dict) :-
+	bdd_build1(X,B1,Dict),
+	bdd_build1(Y,B2,Dict),
+	bdd_and(B1,B2,B),
+	bdd_addref(B,B).
+bdd_build1(X+Y,B,Dict) :-
+	bdd_build1(X,B1,Dict),
+	bdd_build1(Y,B2,Dict),
+	bdd_or(B1,B2,B),
+	bdd_addref(B,B).
+bdd_build1((X->Y),B,Dict) :-
+	bdd_build1(X,B1,Dict),
+	bdd_build1(Y,B2,Dict),
+	bdd_apply(B1,B2,5,B),
+	bdd_addref(B,B). 	% 5 is opcode for ->
+bdd_build1((X=Y),B,Dict) :-
+	bdd_build1(X,B1,Dict),
+	bdd_build1(Y,B2,Dict),
+	bdd_apply(B1,B2,6,B),
+	bdd_addref(B,B).	% 6 is opcode for =
+	
+	
+lookup(X,Dict,N) :-
+	lookup1(X,0,Dict,N).
+	
+lookup1(X,N,[(X,N)|_],N) :-
+	!.
+lookup1(X,K,[_|Dict],N) :-
+	K1 is K+1,
+	lookup1(X,K1,Dict,N).
+	
+boolvar(X) :-
+	atom(X),
+	!.
+boolvar('$VAR'(X)) :-
+	atomic(X).
+	
