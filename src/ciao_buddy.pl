@@ -123,7 +123,15 @@ bdd_build(E,B) :-
 bdd_build1(0,B,_) :-
 	bdd_false(B),
 	bdd_addref(B,B).
+bdd_build1(false,B,_) :-
+	!,
+	bdd_false(B),
+	bdd_addref(B,B).
 bdd_build1(1,B,_) :-
+	bdd_true(B),
+	bdd_addref(B,B).
+bdd_build1(true,B,_) :-
+	!,
 	bdd_true(B),
 	bdd_addref(B,B).
 bdd_build1(X,B,Dict) :-
