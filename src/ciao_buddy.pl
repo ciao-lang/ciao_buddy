@@ -20,7 +20,9 @@
 			bdd_low/2,
 			bdd_and/3,
 			bdd_or/3,
-			bdd_printtable/1
+			bdd_printtable/1,
+			bdd_build/2,
+			bdd_build1/3
             ],
             [assertions,foreign_interface]).
 
@@ -115,6 +117,8 @@ bdd_build(E,B) :-
 % Assuming Dict is free before the first call.
 % After the first call Dict=[(x,0),(y,1),(z,2)|Dict1]
 % After the second call Dict=[(x,0),(y,1),(z,2),(w,3)|Dict2] and Dict1=[(w,3)|Dict2].
+
+:- doc(bug, "bdd_addref for all nodes might be unnecessary and cause memory leaks.").
 
 bdd_build1(0,B,_) :-
 	bdd_false(B),
