@@ -1,6 +1,7 @@
-:- module(ciao_buddy_test,_).
+:- module(ciao_buddy_test,[],[assertions]).
 
 :- use_module(ciao_buddy(ciao_buddy)).
+:- use_module(library(write)).
 
 % #define bddop_and       0
 % #define bddop_xor       1
@@ -13,6 +14,8 @@
 % #define bddop_less      8
 % #define bddop_invimp    9
 
+:- test test/0.
+:- export(test/0).
 test :-
 	bdd_init(1000,100,_),
 	bdd_setvarnum(20,_),
