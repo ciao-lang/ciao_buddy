@@ -1,6 +1,7 @@
 :- module(ciao_buddy_test,[],[assertions]).
 
 :- use_module(ciao_buddy(ciao_buddy)).
+:- use_module(library(streams)).
 :- use_module(library(write)).
 
 % #define bddop_and       0
