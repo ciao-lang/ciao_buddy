@@ -29,70 +29,70 @@
 % Ciao Prolog foreign language interface for BDD package Buddy 2.4
 % Author: John Gallagher
 
-:- true pred bdd_init(in(_),in(_),go(R)) :: 
+:- trust pred bdd_init(in(_),in(_),go(R)) :: 
 					c_int * c_int * c_int + (foreign, returns(R)).
 					
-:- true pred bdd_done(in(_)) :: 
+:- trust pred bdd_done(in(_)) :: 
 					c_int + foreign.
 					
-:- true pred bdd_setvarnum(in(_), go(R)) :: 
+:- trust pred bdd_setvarnum(in(_), go(R)) :: 
                   c_int * c_int + (foreign, returns(R)).
 
-:- true pred bdd_ithvar(in(_), go(BDD)) :: 
+:- trust pred bdd_ithvar(in(_), go(BDD)) :: 
                   c_int * c_int + (foreign, returns(BDD)).
 
-:- true pred bdd_nithvar(in(_), go(BDD)) :: 
+:- trust pred bdd_nithvar(in(_), go(BDD)) :: 
                   c_int * c_int + (foreign, returns(BDD)).
 
-:- true pred bdd_apply(in(_), in(_), in(_), go(BDD)) :: 
+:- trust pred bdd_apply(in(_), in(_), in(_), go(BDD)) :: 
                   c_int * c_int * c_int * c_int + (foreign, returns(BDD)).
 
-:- true pred bdd_addref(in(_), go(BDD)) :: 
+:- trust pred bdd_addref(in(_), go(BDD)) :: 
                   c_int * c_int + (foreign, returns(BDD)).
 
-:- true pred bdd_delref(in(_), go(BDD)) :: 
+:- trust pred bdd_delref(in(_), go(BDD)) :: 
                   c_int * c_int + (foreign, returns(BDD)).
                   
-:- true pred bdd_makeset(in(_), in(_), go(BDD)) :: 
+:- trust pred bdd_makeset(in(_), in(_), go(BDD)) :: 
                   c_int * c_int * c_int + (foreign, returns(BDD)).
                 
-:- true pred bdd_exists(in(_), in(_), go(BDD)) :: 
+:- trust pred bdd_exists(in(_), in(_), go(BDD)) :: 
                   c_int * c_int * c_int + (foreign, returns(BDD)).
                   
-:- true pred bdd_newpair(go(Pair)) ::
+:- trust pred bdd_newpair(go(Pair)) ::
 				  address + (foreign, returns(Pair)).
                   
-:- true pred bdd_setpair(in(_), in(_), in(_), go(R)) ::
+:- trust pred bdd_setpair(in(_), in(_), in(_), go(R)) ::
 				  address * c_int * c_int * c_int + (foreign, returns(R)).
 				  
-:- true pred bdd_replace(in(_), in(_), go(R)) ::
+:- trust pred bdd_replace(in(_), in(_), go(R)) ::
 				  c_int * address * c_int + (foreign, returns(R)).
 				  
-:- true pred bdd_false(go(BDD)) ::
+:- trust pred bdd_false(go(BDD)) ::
 				  c_int + (foreign, returns(BDD)).
 
-:- true pred bdd_true(go(BDD)) ::
+:- trust pred bdd_true(go(BDD)) ::
 				  c_int + (foreign, returns(BDD)).
 				  
-:- true pred bdd_not(in(_),go(BDD)) ::
+:- trust pred bdd_not(in(_),go(BDD)) ::
 				  c_int * c_int + (foreign, returns(BDD)).
 				  
-:- true pred bdd_ite(in(_), in(_), in(_), go(BDD)) :: 
+:- trust pred bdd_ite(in(_), in(_), in(_), go(BDD)) :: 
                   c_int * c_int * c_int * c_int + (foreign, returns(BDD)).
                   
-:- true pred bdd_high(in(_), go(BDD)) ::
+:- trust pred bdd_high(in(_), go(BDD)) ::
 				  c_int * c_int + (foreign, returns(BDD)).
 
-:- true pred bdd_low(in(_), go(BDD)) ::
+:- trust pred bdd_low(in(_), go(BDD)) ::
 				  c_int * c_int + (foreign, returns(BDD)).
               
-:- true pred bdd_and(in(_), in(_), go(BDD)) :: 
+:- trust pred bdd_and(in(_), in(_), go(BDD)) :: 
                   c_int * c_int * c_int + (foreign, returns(BDD)).
 
-:- true pred bdd_or(in(_), in(_), go(BDD)) :: 
+:- trust pred bdd_or(in(_), in(_), go(BDD)) :: 
                   c_int * c_int * c_int + (foreign, returns(BDD)).
                
-:- true pred bdd_printtable(in(_)) :: 
+:- trust pred bdd_printtable(in(_)) :: 
                   c_int + foreign.
 
 :- include(.(ciao_buddy_config_auto)).
