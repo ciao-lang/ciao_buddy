@@ -6,9 +6,9 @@ pkg_name="buddy-2.4"
 # Origin for binary distribution
 function pkg_bin_origin() {
     case "$CIAO_OS" in
-	*)
-	    echo "ERROR: Binary unavailable for CIAO_OS=$CIAO_OS" 1>&2
-	    exit 1
+        *)
+            echo "ERROR: Binary unavailable for CIAO_OS=$CIAO_OS" 1>&2
+            exit 1
     esac
 }
 
@@ -39,11 +39,11 @@ function pkg_install() {
 pkg_lib=bdd
 case "$CIAO_OS" in
     LINUX)
-	pkg_libfile="libbdd.so.0.0"
-	pkg_libfileAct="libbdd.so"
-	;;
+        pkg_libfile="libbdd.so.0.0"
+        pkg_libfileAct="libbdd.so"
+        ;;
     DARWIN)
-	pkg_libfile="libbdd.0.dylib"
-	pkg_libfileAct="libbdd.dylib"
-	;;
+        pkg_libfile="libbdd.0.dylib"
+        pkg_libfileAct="libbdd.dylib"
+        ;;
 esac
